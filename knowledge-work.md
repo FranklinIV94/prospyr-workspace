@@ -8,10 +8,15 @@ tags: [knowledge, graph]
 
 Agents need tools for thought too. Just as Zettelkasten, evergreen notes, and memory palaces gave humans external structures to think with, agent-operated knowledge systems give agents external structures to think with.
 
-## Synthesis
+## Seed Graph Traversal
 
-Developed arguments about how the pieces fit together:
+- Seed Graph Index: [[seed-index]]
+- Seed Seed: [[seed-discovery]] -> [[seed-context-engineering]] -> [[seed-memory-management]]
+- Seed to ALBS: [[ALBS-Knowledge-Graph-Index]] -> [[ALBS-Operations]] -> [[seed-memory-management]]
+- Starter Seed: [[seed-knowledge-work-overview]]
 
-- [[the system is the argument]] — philosophy with proof of work; every note, link, and MOC demonstrates the methodology it describes
-- [[coherent architecture emerges from wiki links spreading activation and small-world topology]] — the foundational triangle that answers what structure looks like, why it works, how agents navigate it, and when to reassess
-...
+## Seed Graph Seed Links
+- Knowledge Graph Overview: [[seed-knowledge-work-overview]]
+- Discovery: [[seed-discovery]]
+- Context Engineering: [[seed-context-engineering]]
+
