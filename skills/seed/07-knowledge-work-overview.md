@@ -1,19 +1,17 @@
 ---
-title: Knowledge Graph Overview
-date: 2026-02-19
-tags: [knowledge, graph, overview, seed]
+title: Seed Knowledge Graph Overview
+ndate: 2026-02-19
+tags: [seed, knowledge, overview]
 ---
 
 # Seed Skill: Knowledge Graph Overview
 
-High-level view of skill graphs, MOCs, and navigational patterns for ALBS.
+Seed for high-level overview of knowledge graphs, MOCs and traversal in ALBS.
 
-## Key Concepts
-- Wikilinks, YAML frontmatter, MOCs
-- Progressive disclosure (index → descriptions → links)
-- Traversal rules and discovery patterns
+## Summary
+Seed for the seed graph concept and agent traversal.
 
 ## Related Concepts
+- [[Seed Graph Index]]
 - [[knowledge-work]]
 - [[ALBS-Knowledge-Graph-Index]]
-- [[ALBS Operations]]

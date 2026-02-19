@@ -1,19 +1,19 @@
 ---
-title: Deployment & Release
-date: 2026-02-19
-tags: [skills, deployment, release, ALBS, seed]
+title: Seed Deployment & Release
+ndate: 2026-02-19
+tags: [seed, deployment, release]
 ---
 
 # Seed Skill: Deployment & Release
 
-Guidance for packaging, releasing, and deploying client solutions.
+Seed for packaging, releasing, and deploying client solutions.
 
-## Phases
+## Steps
 - Packaging and dependency management
 - Release channels and environment promotion
 - Post-release validation and rollback planning
 
 ## Related Concepts
-- [[Package-Release-Deploy]]
+- [[Seed Graph Index]]
 - [[ALBS Operations]]
-- [[Knowledge Work]]
+- [[knowledge-work]]

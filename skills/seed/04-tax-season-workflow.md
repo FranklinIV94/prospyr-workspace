@@ -1,12 +1,12 @@
 ---
-title: Tax Season Workflow
-date: 2026-02-19
-tags: [skills, tax, workflow, ALBS, seed]
+title: Seed Tax Season Workflow
+ndate: 2026-02-19
+tags: [seed, tax, workflow, ALBS, seed]
 ---
 
 # Seed Skill: Tax Season Workflow
 
-End-to-end workflow for handling client tax returns, from data intake to filing.
+Seed for end-to-end tax season operations.
 
 ## Stages
 - Data collection
@@ -15,7 +15,12 @@ End-to-end workflow for handling client tax returns, from data intake to filing.
 - Filing and confirmation
 - Client follow-up and storage
 
+## Metrics
+- Turnaround time per client
+- QC pass rate
+- Client satisfaction score
+
 ## Related Concepts
+- [[Seed Graph Index]]
 - [[ALBS Operations]]
-- [[Client Engagement Lifecycle]]
-- [[Memory Management]]
+- [[knowledge-work]]

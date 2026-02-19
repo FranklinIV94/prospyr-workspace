@@ -1,19 +1,24 @@
 ---
-title: Client Onboarding
-date: 2026-02-19
-tags: [skills, client, onboarding, ALBS, seed]
+title: Seed Client Onboarding
+ndate: 2026-02-19
+tags: [seed, client, onboarding]
 ---
 
 # Seed Skill: Client Onboarding
 
-Process to bring a new client into ALBS, capture knowledge, and set success metrics.
+Seed for onboarding a new client into ALBS and capturing knowledge.
 
 ## Steps
 - Kickoff and scoping
 - Data intake and access provisioning
-- Engage defender roles (Architect/Builder relation)
-- Set milestones and success criteria
+- Role alignment (Architect/Builder interactions)
+- Milestones & success criteria
+
+## Metrics
+- Time-to-onboard
+- Knowledge capture completeness
 
 ## Related Concepts
-- [[Client Engagement Lifecycle]]
+- [[Seed Graph Index]]
+- [[Client-Engagement-Lifecycle]]
 - [[ALBS Operations]]
