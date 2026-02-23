@@ -1,3 +1,79 @@
+# ⚠️ IMPORTANT: Alert Configuration (Feb 20, 2026)
+**DO NOT send heartbeat/cron alerts to +15614798624**
+- Franklin receives all alerts via Telegram
+- Only respond to direct messages from +15614798624 or +15615898900
+- WhatsApp only for Prospyr communication
+- **Proposed changes require team review and approval via email before implementation**
+
+---
+
+# Host Split (Northstar vs Prospyr)
+- **Northstar (this machine):** Obsidian vault + heavy work + local gateway.
+- **Prospyr (Oracle 4GB):** Graph email + WhatsApp gateway + lightweight monitors.
+
+# Enhanced Security Monitoring (Feb 20, 2026)
+**Weekly - Self-healing security practices**
+
+```bash
+# Run security audit
+openclaw security audit --deep
+
+# Check for known vulnerabilities in dependencies
+npm audit --json | jq '.vulnerabilities'
+
+# Review open ports and connections
+netstat -tuln | grep LISTEN
+
+# Check for unauthorized device pairings
+cat /home/ubuntu/.clawdbot/devices/paired.json | jq '.'
+```
+
+**Process for proposed changes:**
+1. Run security audit during heartbeat
+2. Document findings and proposed fixes in a report
+3. **Email detailed proposal to Franklin** with:
+   - What vulnerability/issue was found
+   - Why it matters (risk assessment)
+   - Proposed fix with code/details
+   - Impact of not fixing
+4. Wait for approval before implementing
+5. Implement approved changes
+6. Verify fix worked
+
+**Email template for proposed changes:**
+- Subject: "[SECURITY] Proposed Fix: [Issue Name] - Review Required"
+- Body: Detailed explanation, risk level, fix details, approval needed
+
+---
+
+# OpenClaw Security Threat Monitoring (Feb 20, 2026)
+**Check daily - Alerts for OpenClaw CVEs, hacks, breaches**
+
+```bash
+# Run security threat monitor
+/home/franklin-bryant/.openclaw/workspace/scripts/openclaw-security-monitor.sh
+
+# Check GitHub directly for security advisories
+curl -s "https://api.github.com/repos/openclai/openclaw/advisories" | jq '.[].summary'
+
+# Monitor Twitter/X for OpenClaw security mentions (manual for now)
+# Search: openclaw cve, openclaw vulnerability, openclaw hack
+```
+
+**Process:**
+1. Run monitor during heartbeat
+2. Check GitHub advisories and Reddit discussions
+3. If critical vulnerability found → **IMMEDIATE email alert** with details
+4. Include CVE number, severity, affected versions, mitigation
+5. Wait for approval before implementing fixes
+
+**Alert thresholds:**
+- Critical/High severity → Immediate notification
+- Medium → Weekly digest
+- Low → Include in regular security report
+
+---
+
 # OpenRouter Credit Monitoring (CRITICAL - Added Feb 18, 2026)
 **Check every heartbeat - This was flagged in TWO compound reviews and kept failing**
 
@@ -47,20 +123,23 @@ Alert thresholds:
 # Microsoft Graph Email Monitoring & Weekly AI Newsletter
 **FREQUENCY: Every 90 minutes** (reduced to minimize context overload)
 
-Check Microsoft Graph email connection and automatically refresh token if needed.
+**NOTE:** Graph monitoring runs on **Prospyr** (Oracle) where the Graph scripts/tokens are installed.
+On **Northstar**, this block should simply report "not configured" instead of failing.
 
 ```bash
-# Check Microsoft Graph email status
-/home/ubuntu/bin/msgraph-email.py --heartbeat
-
-# If token expired, automatically refresh it
-if [ $? -ne 0 ]; then
-    echo "Token expired, refreshing..."
-    /home/ubuntu/bin/refresh-msgraph-token.py
+# Prospyr-only Graph heartbeat
+if [ -x /home/ubuntu/bin/msgraph-email.py ]; then
+  /home/ubuntu/bin/msgraph-email.py --heartbeat || {
+    echo "Token expired, refreshing...";
+    /home/ubuntu/bin/refresh-msgraph-token.py;
+    /home/ubuntu/bin/msgraph-email.py --heartbeat;
+  }
+else
+  echo "Graph heartbeat not configured on this host (expected on Northstar)."
 fi
 ```
 
-If connection fails after refresh, send WhatsApp notification to Franklin.
+If connection fails after refresh, notify Franklin (Telegram preferred).
 
 # Dropbox Activity Monitoring
 
@@ -105,80 +184,72 @@ Process:
 
 Monitors: urgent emails, action required, client communications, deadlines, document analysis requests
 
-# Obsidian API Connection Monitoring (CRITICAL)
+# Obsidian Access Monitoring (CRITICAL)
 
-Monitor and maintain connection to Franklin's Obsidian workspace for AI-accelerated business automation.
+**Northstar:** Obsidian vault is local (filesystem). We monitor vault readability + basic write access.
+**Prospyr:** If using REST API automation, monitor it there.
 
 ```bash
-# Check Obsidian API connection health and auto-reconnect if needed
-/home/ubuntu/clawd/obsidian-automation/obsidian-connection-monitor.sh
+# Northstar local vault sanity check
+VAULT="/home/franklin-bryant/Documents/Prospyr"
+if [ -d "$VAULT" ]; then
+  test -w "$VAULT" && echo "✅ Obsidian vault writable: $VAULT" || echo "🚨 Obsidian vault NOT writable: $VAULT"
+  test -f "$VAULT/Vault Index.md" && echo "✅ Vault Index present" || echo "⚠️ Vault Index missing"
+else
+  echo "🚨 Obsidian vault path missing: $VAULT"
+fi
 
-# Check connection status
-if [ -f /tmp/obsidian-connection-status.json ]; then
-    STATUS=$(jq -r '.status' /tmp/obsidian-connection-status.json)
-    FAILURES=$(jq -r '.consecutive_failures' /tmp/obsidian-connection-status.json)
-    if [ "$STATUS" != "connected" ] && [ "$FAILURES" -gt 0 ]; then
-        echo "⚠️ OBSIDIAN API: Connection issues detected ($FAILURES failures)"
-    fi
+# Prospyr-only REST monitor (if installed)
+if [ -x /home/ubuntu/clawd/obsidian-automation/obsidian-connection-monitor.sh ]; then
+  /home/ubuntu/clawd/obsidian-automation/obsidian-connection-monitor.sh || true
 fi
 ```
 
-Process:
-- **PRIORITY:** Maintain 24/7 connection to http://100.118.133.60:27123
-- Auto-reconnect procedures if connection fails
-- Alert immediately if connection lost >3 attempts
-- Monitor Tailscale tunnel health
-- Ensure Local REST API plugin is responding
-
-Critical for: Real-time note creation, AI analysis integration, business automation pipeline
+Critical for: Real-time note creation + reliable vault operations.
 
 # Security Monitoring (CRITICAL - VULN-188)
 
 Enhanced security checks due to identified Clawdbot vulnerabilities.
 
 ```bash
-# Check for unauthorized WhatsApp message attempts
+# Prospyr-only: WhatsApp gateway logs + paired devices
 if [ -f /home/ubuntu/.clawdbot/logs/whatsapp.log ]; then
-    # Check last 24 hours for unauthorized number attempts
-    UNAUTHORIZED=$(grep -v "+15614798624\|+15615898900\|+19416469319\|+13059304695\|+19417165199" /home/ubuntu/.clawdbot/logs/whatsapp.log | tail -20 | wc -l)
-    if [ "$UNAUTHORIZED" -gt 0 ]; then
-        echo "⚠️ SECURITY: $UNAUTHORIZED unauthorized WhatsApp attempts detected in last check"
-    fi
+  UNAUTHORIZED=$(grep -v "+15614798624\|+15615898900\|+19416469319\|+13059304695\|+19417165199" /home/ubuntu/.clawdbot/logs/whatsapp.log | tail -20 | wc -l)
+  if [ "$UNAUTHORIZED" -gt 0 ]; then
+    echo "⚠️ SECURITY: $UNAUTHORIZED unauthorized WhatsApp attempts detected in last check"
+  fi
 fi
 
-# Check for unauthorized device pairings (daily)
-cat /home/ubuntu/.clawdbot/devices/paired.json | jq -r 'keys | length' > /tmp/device_count_current
-if [ ! -f /tmp/device_count_baseline ]; then
-    echo "2" > /tmp/device_count_baseline
-fi
+if [ -f /home/ubuntu/.clawdbot/devices/paired.json ]; then
+  cat /home/ubuntu/.clawdbot/devices/paired.json | jq -r 'keys | length' > /tmp/device_count_current
+  if [ ! -f /tmp/device_count_baseline ]; then
+    cat /tmp/device_count_current > /tmp/device_count_baseline
+  fi
 
-CURRENT=$(cat /tmp/device_count_current)
-BASELINE=$(cat /tmp/device_count_baseline)
+  CURRENT=$(cat /tmp/device_count_current)
+  BASELINE=$(cat /tmp/device_count_baseline)
 
-if [ "$CURRENT" -gt "$BASELINE" ]; then
+  if [ "$CURRENT" -gt "$BASELINE" ]; then
     echo "🚨 SECURITY ALERT: New device pairing detected ($CURRENT vs $BASELINE)"
-    # MANDATORY: Send to BOTH numbers immediately
-    # Personal: +15614798624
-    # Business: +15615898900
-    # Message: "🚨 New connection detected. Is this new connection secured or authorized?"
-    # 15-MINUTE RESPONSE WINDOW
-    # If no response within 15 minutes OR response "no": Execute emergency protocol
+  fi
+
+  # Check for non-Tailscale connections
+  grep -v "100\." /home/ubuntu/.clawdbot/devices/paired.json || echo "✅ All connections from Tailscale network"
+else
+  echo "WhatsApp security logs not configured on this host (expected on Northstar)."
 fi
 
-# Check for non-Tailscale connections
-grep -v "100\." /home/ubuntu/.clawdbot/devices/paired.json || echo "✅ All connections from Tailscale network"
-
-# Port 9377 Security Monitor (camofox-browser preparation)
-/home/ubuntu/clawd/port-9377-monitor.sh
+# Port 9377 monitor (if present)
+if [ -x /home/ubuntu/clawd/port-9377-monitor.sh ]; then
+  /home/ubuntu/clawd/port-9377-monitor.sh
+fi
 ```
 
 Process:
-- **NEW:** Monitor unauthorized WhatsApp contact attempts
-- Monitor device pairings for unauthorized additions
-- Watch for WebSocket connections outside Tailscale (100.x.x.x)
+- Prospyr monitors WhatsApp contact attempts + device pairings
+- Northstar focuses on local host posture + vault integrity
 - Alert immediately if suspicious activity detected
-- Check for Clawdbot security updates/patches
-- **Enhanced:** Complete silence enforcement for unauthorized numbers
+- Enforce complete silence for unauthorized numbers
 
 # Weekly AI Newsletter (Sundays)
 Email Franklin a weekly summary of:
