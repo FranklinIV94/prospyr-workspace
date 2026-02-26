@@ -7,127 +7,79 @@
 
 ---
 
+# 🚨 MODEL CONFIGURATION (Feb 26, 2026 — ACTIVE UNTIL FURTHER NOTICE)
+**QWEN-ONLY MODE:** OpenRouter disabled by Franklin. Use `qwen-portal/coder-model` and `qwen-portal/vision-model` exclusively.
+- Reference: `MODEL-CONFIG-REMINDER.md`
+- Do NOT attempt OpenRouter API calls until explicitly re-enabled
+
+---
+
 # Host Split (Northstar vs Prospyr)
 - **Northstar (this machine):** Obsidian vault + heavy work + local gateway.
 - **Prospyr (Oracle 4GB):** Graph email + WhatsApp gateway + lightweight monitors.
 
-# Enhanced Security Monitoring (Feb 20, 2026)
-**Weekly - Self-healing security practices**
+# ✅ Heartbeat Checks (Patched Feb 23, 2026)
 
-```bash
-# Run security audit
-openclaw security audit --deep
-
-# Check for known vulnerabilities in dependencies
-npm audit --json | jq '.vulnerabilities'
-
-# Review open ports and connections
-netstat -tuln | grep LISTEN
-
-# Check for unauthorized device pairings
-cat /home/ubuntu/.clawdbot/devices/paired.json | jq '.'
-```
-
-**Process for proposed changes:**
-1. Run security audit during heartbeat
-2. Document findings and proposed fixes in a report
-3. **Email detailed proposal to Franklin** with:
-   - What vulnerability/issue was found
-   - Why it matters (risk assessment)
-   - Proposed fix with code/details
-   - Impact of not fixing
-4. Wait for approval before implementing
-5. Implement approved changes
-6. Verify fix worked
-
-**Email template for proposed changes:**
-- Subject: "[SECURITY] Proposed Fix: [Issue Name] - Review Required"
-- Body: Detailed explanation, risk level, fix details, approval needed
+This file now has **two explicit sections**:
+- **Northstar-local checks** (run on this machine)
+- **Prospyr-only checks** (run on Oracle; guarded so Northstar doesn’t “false fail”)
 
 ---
 
-# OpenClaw Security Threat Monitoring (Feb 20, 2026)
-**Check daily - Alerts for OpenClaw CVEs, hacks, breaches**
+# Northstar-local checks (run every heartbeat)
 
+## Server Resource Monitoring (CRITICAL)
 ```bash
-# Run security threat monitor
-/home/franklin-bryant/.openclaw/workspace/scripts/openclaw-security-monitor.sh
-
-# Check GitHub directly for security advisories
-curl -s "https://api.github.com/repos/openclai/openclaw/advisories" | jq '.[].summary'
-
-# Monitor Twitter/X for OpenClaw security mentions (manual for now)
-# Search: openclaw cve, openclaw vulnerability, openclaw hack
-```
-
-**Process:**
-1. Run monitor during heartbeat
-2. Check GitHub advisories and Reddit discussions
-3. If critical vulnerability found → **IMMEDIATE email alert** with details
-4. Include CVE number, severity, affected versions, mitigation
-5. Wait for approval before implementing fixes
-
-**Alert thresholds:**
-- Critical/High severity → Immediate notification
-- Medium → Weekly digest
-- Low → Include in regular security report
-
----
-
-# OpenRouter Credit Monitoring (CRITICAL - Added Feb 18, 2026)
-**Check every heartbeat - This was flagged in TWO compound reviews and kept failing**
-
-```bash
-# Check OpenRouter credit balance
-# If MiniMax model is failing with 402 errors, alert Franklin
-curl -s "https://openrouter.ai/api/v1/auth/key" -H "Authorization: Bearer $OPENROUTER_API_KEY" | jq -r '.data.usage, .data.limit'
-```
-
-If you see 402 errors on MiniMax model (minimax/minimax-m2.5):
-- **IMMEDIATELY** notify Franklin that OpenRouter credits are depleted
-- Note: System falls back to Claude Opus, but this costs more
-- Franklin's numbers: +15614798624 (personal), +15615898900 (business)
-
-**Why this matters:** MiniMax is the default model ($0.20-0.30/1M input). When credits run out, every request falls back to Opus ($5.00/1M input) — 15-20x cost increase.
-
----
-
-# Server Resource Monitoring (CRITICAL)
-**Check every heartbeat - Alert if thresholds exceeded**
-
-```bash
-# Check disk usage
 DISK_USED=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
-if [ "$DISK_USED" -gt 85 ]; then
-    echo "🚨 DISK ALERT: ${DISK_USED}% used - cleanup needed!"
-fi
+[ "$DISK_USED" -gt 85 ] && echo "🚨 DISK ALERT: ${DISK_USED}% used - cleanup needed!"
 
-# Check memory usage
 MEM_AVAIL=$(free -m | awk 'NR==2 {print $7}')
-if [ "$MEM_AVAIL" -lt 150 ]; then
-    echo "🚨 MEMORY ALERT: Only ${MEM_AVAIL}MB available!"
-fi
+[ "$MEM_AVAIL" -lt 150 ] && echo "🚨 MEMORY ALERT: Only ${MEM_AVAIL}MB available!"
 
-# Check swap usage
 SWAP_USED=$(free -m | awk 'NR==3 {print $3}')
-if [ "$SWAP_USED" -gt 2000 ]; then
-    echo "⚠️ SWAP WARNING: ${SWAP_USED}MB in use - system under pressure"
+[ "$SWAP_USED" -gt 2000 ] && echo "⚠️ SWAP WARNING: ${SWAP_USED}MB in use - system under pressure"
+```
+
+## OpenClaw gateway sanity
+```bash
+openclaw gateway status || true
+```
+
+## OpenClaw security threat monitor (local script)
+```bash
+if [ -x /home/franklin-bryant/.openclaw/workspace/scripts/openclaw-security-monitor.sh ]; then
+  /home/franklin-bryant/.openclaw/workspace/scripts/openclaw-security-monitor.sh
+else
+  echo "openclaw-security-monitor.sh not found (ok)"
 fi
 ```
 
-Alert thresholds:
-- Disk >85% → Alert Franklin immediately
-- Memory <150MB available → Alert Franklin immediately
-- Swap >2GB → Warning (system stressed but operational)
-
-# Microsoft Graph Email Monitoring & Weekly AI Newsletter
-**FREQUENCY: Every 90 minutes** (reduced to minimize context overload)
-
-**NOTE:** Graph monitoring runs on **Prospyr** (Oracle) where the Graph scripts/tokens are installed.
-On **Northstar**, this block should simply report "not configured" instead of failing.
-
+## Obsidian vault sanity (filesystem)
 ```bash
-# Prospyr-only Graph heartbeat
+VAULT="/home/franklin-bryant/Documents/Prospyr"
+if [ -d "$VAULT" ]; then
+  test -w "$VAULT" && echo "✅ Obsidian vault writable" || echo "🚨 Obsidian vault NOT writable"
+  test -f "$VAULT/Vault Index.md" && echo "✅ Vault Index present" || echo "⚠️ Vault Index missing"
+else
+  echo "🚨 Obsidian vault path missing: $VAULT"
+fi
+```
+
+## OpenRouter credit monitoring (only if key is present)
+```bash
+if [ -n "${OPENROUTER_API_KEY:-}" ]; then
+  curl -s "https://openrouter.ai/api/v1/auth/key" -H "Authorization: Bearer $OPENROUTER_API_KEY" | jq -r '.data.usage, .data.limit'
+else
+  echo "OPENROUTER_API_KEY not set on this host (ok)"
+fi
+```
+
+---
+
+# Prospyr-only checks (Oracle) — guarded (won’t fail Northstar)
+
+## Microsoft Graph email heartbeat (Prospyr only)
+```bash
 if [ -x /home/ubuntu/bin/msgraph-email.py ]; then
   /home/ubuntu/bin/msgraph-email.py --heartbeat || {
     echo "Token expired, refreshing...";
@@ -139,117 +91,42 @@ else
 fi
 ```
 
-If connection fails after refresh, notify Franklin (Telegram preferred).
-
-# Dropbox Activity Monitoring
-
-Check Dropbox for recent uploads, changes, and action items that need follow-up.
-
+## LangExtract email analyzer (prefer local workspace script if present)
 ```bash
-# Check recent Dropbox activity (last 48 hours by default)
-node dropbox-activity-monitor.js 48
-
-# Automatic token renewal check
-node dropbox-token-renewal.js check
-```
-
-Process:
-- Review last 48 hours of activity
-- Communicate findings immediately
-- Delete detailed data after reporting (privacy)
-- Await specific instructions for follow-ups
-
-Monitors: proposals, contracts, client files, pending items
-
-# Email Activity Monitoring
-
-Check email for recent important messages and action items requiring attention.
-
-```bash
-# Check recent email activity (last 48 hours)
-node email-activity-monitor.js
-
-# Check for business emails requiring LangExtract analysis
-/home/ubuntu/clawd/langextract-email-analyzer.sh
-```
-
-Process:
-- Review last 48 hours of sent/received emails
-- Analyze for importance and action requirements
-- Process business documents with LangExtract (ALBS standard)
-- Extract client communications, contracts, proposals, tax docs
-- Communicate findings immediately
-- Delete email cache after reporting (privacy)
-- Await specific instructions for follow-ups
-
-Monitors: urgent emails, action required, client communications, deadlines, document analysis requests
-
-# Obsidian Access Monitoring (CRITICAL)
-
-**Northstar:** Obsidian vault is local (filesystem). We monitor vault readability + basic write access.
-**Prospyr:** If using REST API automation, monitor it there.
-
-```bash
-# Northstar local vault sanity check
-VAULT="/home/franklin-bryant/Documents/Prospyr"
-if [ -d "$VAULT" ]; then
-  test -w "$VAULT" && echo "✅ Obsidian vault writable: $VAULT" || echo "🚨 Obsidian vault NOT writable: $VAULT"
-  test -f "$VAULT/Vault Index.md" && echo "✅ Vault Index present" || echo "⚠️ Vault Index missing"
+if [ -x /home/franklin-bryant/.openclaw/workspace/langextract-email-analyzer.sh ]; then
+  /home/franklin-bryant/.openclaw/workspace/langextract-email-analyzer.sh
 else
-  echo "🚨 Obsidian vault path missing: $VAULT"
-fi
-
-# Prospyr-only REST monitor (if installed)
-if [ -x /home/ubuntu/clawd/obsidian-automation/obsidian-connection-monitor.sh ]; then
-  /home/ubuntu/clawd/obsidian-automation/obsidian-connection-monitor.sh || true
+  echo "LangExtract analyzer not configured on this host (ok)"
 fi
 ```
 
-Critical for: Real-time note creation + reliable vault operations.
-
-# Security Monitoring (CRITICAL - VULN-188)
-
-Enhanced security checks due to identified Clawdbot vulnerabilities.
-
+## WhatsApp security logs (Prospyr only)
 ```bash
-# Prospyr-only: WhatsApp gateway logs + paired devices
 if [ -f /home/ubuntu/.clawdbot/logs/whatsapp.log ]; then
   UNAUTHORIZED=$(grep -v "+15614798624\|+15615898900\|+19416469319\|+13059304695\|+19417165199" /home/ubuntu/.clawdbot/logs/whatsapp.log | tail -20 | wc -l)
-  if [ "$UNAUTHORIZED" -gt 0 ]; then
-    echo "⚠️ SECURITY: $UNAUTHORIZED unauthorized WhatsApp attempts detected in last check"
-  fi
+  [ "$UNAUTHORIZED" -gt 0 ] && echo "⚠️ SECURITY: $UNAUTHORIZED unauthorized WhatsApp attempts detected in last check"
+else
+  echo "WhatsApp logs not configured on this host (expected on Northstar)."
 fi
 
 if [ -f /home/ubuntu/.clawdbot/devices/paired.json ]; then
-  cat /home/ubuntu/.clawdbot/devices/paired.json | jq -r 'keys | length' > /tmp/device_count_current
-  if [ ! -f /tmp/device_count_baseline ]; then
-    cat /tmp/device_count_current > /tmp/device_count_baseline
-  fi
-
-  CURRENT=$(cat /tmp/device_count_current)
-  BASELINE=$(cat /tmp/device_count_baseline)
-
-  if [ "$CURRENT" -gt "$BASELINE" ]; then
-    echo "🚨 SECURITY ALERT: New device pairing detected ($CURRENT vs $BASELINE)"
-  fi
-
-  # Check for non-Tailscale connections
-  grep -v "100\." /home/ubuntu/.clawdbot/devices/paired.json || echo "✅ All connections from Tailscale network"
-else
-  echo "WhatsApp security logs not configured on this host (expected on Northstar)."
-fi
-
-# Port 9377 monitor (if present)
-if [ -x /home/ubuntu/clawd/port-9377-monitor.sh ]; then
-  /home/ubuntu/clawd/port-9377-monitor.sh
+  cat /home/ubuntu/.clawdbot/devices/paired.json | jq -r 'keys | length' || true
 fi
 ```
 
-Process:
-- Prospyr monitors WhatsApp contact attempts + device pairings
-- Northstar focuses on local host posture + vault integrity
-- Alert immediately if suspicious activity detected
-- Enforce complete silence for unauthorized numbers
+---
+
+# Weekly (manual / scheduled separately)
+
+## Security audit (read-only unless approved)
+```bash
+openclaw security audit --deep
+```
+
+## Open ports snapshot
+```bash
+ss -ltnup 2>/dev/null | head -n 50 || netstat -tuln | head -n 50
+```
 
 # Weekly AI Newsletter (Sundays)
 Email Franklin a weekly summary of:
