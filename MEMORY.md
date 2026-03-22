@@ -122,17 +122,23 @@
 
 **Prospyr:** Oracle VPS — cloud gateway, WhatsApp, Graph email, lightweight monitors.
 
-**Dashboard:** https://prospyr-dashboard.vercel.app — Prospyr Control Center (FULLY REBUILT March 21, 2026)
+**Dashboard:** https://prospyr-dashboard.vercel.app — Prospyr Control Center
+- Next.js 14 + Tailwind CSS v3 + NextAuth v4 + Lucide React
 - Paperclip integration connects to Southstar on the office Paled
 - Login: Franklin@simplifyingbusinesses.com / Jordan2026!
-- Source: `/home/franklin-bryant/.openclaw/workspace/prospyr-dashboard`
-
-**Dashboard:** https://prospyr-dashboard.vercel.app — Prospyr Control Center (FULLY REBUILT March 21, 2026)
-- Next.js 14 + Tailwind CSS v3 + NextAuth v4 + Lucide React
-- Login: Franklin@simplifyingbusinesses.com / Jordan2026!
 - Tabs: Agent Control (agent grid + status), Command Center (chat/assign), Activity Log (runs)
-- Sidebar nav with Lucide icons, Inter font, ALBS dark navy glass-morphism design
-- Paperclip integration pending (server not running on Northstar)
 - Source: `/home/franklin-bryant/.openclaw/workspace/prospyr-dashboard`
-- Deploy token: `vcp_6ecUHcZVhHEe9A3NavzcFEGqQTArBfB6Hmls5ID0zQ30lOVufB3E0t3D`
-- **KNOWN BUG FIXED:** Tailwind v4 was incompatible with Next.js 14 static pages → downgraded to v3
+- **BUG FIXED (Mar 22):** Tailwind v4 was incompatible with Next.js 14 static pages → downgraded to v3
+
+## Twitter/X Article Processing Workflow
+
+Franklin sends articles/threads he finds on Twitter. My job:
+1. **Extract** — Pull the useful/applicable information from the content
+2. **Discard** — Skip anything not relevant to our work
+3. **Update the vault** — Create an Obsidian note with:
+   - Clean source link
+   - Key takeaways relevant to ALBS/Prospyr
+   - How we can apply it
+4. **Blog post ideas** — Flag anything worth documenting for a future blog
+
+**I do NOT go looking for articles.** Franklin feeds them to me.
