@@ -1,0 +1,10 @@
+FRANKLIN 10X GROWTH EMAIL - PENDING SEND
+
+To: franklin@simplifyingbusinesses.com
+Subject: 10x Growth Kickoff — Your Systematic Upgrade Begins
+HTML: /home/franklin-bryant/Documents/Prospyr/Personal-Growth-System/Email-Drafts/2026-03-20-Growth-Kickoff.html
+Status: Ready to send
+
+Northstar (this machine) prepared the content. Prospyr (Oracle) has the email tools to send via Graph API.
+
+This is the first email in the 10x Growth System - 3x per week content delivery.

@@ -1,114 +1,107 @@
 # PDS Trust Agent — ERC-8004 AI Agent Trust Layer
 
-**Hackathon:** Synthesis Hackathon  
+**Built for:** Prospyr / All Lines Business Solutions  
 **Bounty:** Protocollabs ERC-8004 Trust Layer ($8,004) + Open Track  
-**Status:** Built with Northstar + Southstar  
-
----
-
-## Quick Start
-
-```bash
-# Set environment
-export ETH_PRIVATE_KEY=0xYourPrivateKey
-export ETH_RPC_URL=https://your-ethereum-rpc.com
-export CHAIN=sepolia  # or mainnet
-
-# Run agent
-node agent/agent.js
-```
+**Deadline:** March 22, 2026, 11:59PM PT
 
 ## What It Does
 
-1. **Registers AI agents on ERC-8004** — gets an onchain identity with verifiable capability flags
-2. **Builds trust through interactions** — records every transaction, updates reputation onchain
-3. **Verifies other agents** — `canTrust()` query returns bool in one RPC call
-4. **Presents cryptographic attestations** — prove identity + reputation to other agents without revealing private data
-5. **Delegates limited authority** — time-limited, permission-scoped delegation to other agents
+PDS Trust Agent is an onchain AI agent identity and trust verification system built on ERC-8004. It lets agents:
 
-## Architecture
+- **Register onchain** with verifiable identity (address → agent ID)
+- **Build reputation** through recorded interactions
+- **Verify trust** in other agents in a single RPC call
+- **Present attestations** — cryptographic proof of identity + reputation
+- **Grant delegations** — time-limited, permission-scoped authority to other agents
 
-```
-User/Franklin → PDS Trust Agent → ERC-8004 Registry (onchain)
-                              ↓
-                    ┌─────────────────────┐
-                    │ Identity Registry   │
-                    │ Reputation Scoring  │
-                    │ Delegation Framework│
-                    └─────────────────────┘
-```
+## Why ERC-8004
 
-## Smart Contract
+ERC-8004 is the Ethereum standard for AI agent identity and delegation. It defines:
+- Onchain agent identity registry
+- Reputation scoring per agent
+- Attestation format for cross-agent verification
+- Delegation mechanism with expiry and scope
 
-Deployed at `0x8111C4D3f89dCE1bD60eE16d2b8D16eF1f86fB8D` (mainnet + sepolia)
+Our contract (`PDSAgentRegistry.sol`) implements ERC-8004's `IAgentRegistry` interface.
 
-```solidity
-registerAgent(bytes32 agentId, bytes metadata, uint8 capabilityFlags)
-recordInteraction(bytes32 agentId, bool success, uint256 weight)
-getTrustScore(bytes32 agentId) → uint256
-canTrust(bytes32 agentId, uint256 threshold) → bool
-generateAttestation(bytes32 agentId, string claimType) → bytes
-grantDelegation(bytes32 agentId, address delegate, uint256 expiresAt, bytes permissions)
-```
-
-## Capability Flags
-
-| Flag | Value | Description |
-|------|-------|-------------|
-| CAN_TRADE | 1 | Executes financial transactions |
-| CAN_SIGN | 2 | Signs messages and contracts |
-| CAN_DELEGATE | 4 | Can delegate authority |
-| IS_FINANCIAL | 8 | Handles financial instruments |
-
-## Trust Levels
-
-| Score | Level |
-|-------|-------|
-| 800-1000 | HIGHLY_TRUSTED |
-| 500-799 | TRUSTED |
-| 200-499 | NEUTRAL |
-| 0-199 | UNTRUSTED |
-
-## Why This Project
-
-ERC-8004 is the Ethereum Foundation's standard for AI agent identity. Most agents today exist in silos — they can't prove who they are to each other. This creates a trust gap that prevents agents from collaborating autonomously.
-
-PDS Trust Agent solves this by:
-- Giving every agent an onchain identity tied to a wallet
-- Tracking reputation through actual interactions (not self-reported)
-- Enabling verifiable cross-agent communication without revealing sensitive data
-- Supporting delegation chains (agent A trusts agent B, which trusts agent C)
-
-## Files
+## Project Structure
 
 ```
 synthesis-agent/
 ├── contracts/
-│   └── PDSAgentRegistry.sol   # Solidity contract (Foundry)
+│   └── PDSAgentRegistry.sol   # Smart contract (Foundry, solc 0.8.26)
 ├── agent/
-│   └── agent.js                # Node.js agent — pure, no dependencies
-├── docs/
-│   └── SUBMISSION.md           # Hackathon submission
-└── README.md                  # This file
+│   ├── agent.js               # Node.js agent — RUN THIS
+│   └── agent.ts               # TypeScript source (reference)
+├── package.json               # Dependencies (for build tooling only)
+├── README.md                  # This file
+└── SUBMISSION.md              # Full hackathon submission
 ```
 
-## Tech Stack
+## Quick Start
 
-- **Smart Contracts:** Solidity 0.8.26, Foundry
-- **Agent:** Pure Node.js (built-in crypto + HTTP)
-- **Blockchain:** Any EVM chain (tested on mainnet + Sepolia)
-- **Standard:** ERC-8004 (AI Agent Identity)
+```bash
+# Demo mode (no wallet needed)
+node agent/agent.js
 
-## Team
+# With wallet (Sepolia testnet)
+ETH_PRIVATE_KEY=0x... node agent/agent.js
 
-**Prospyr / All Lines Business Solutions**
+# With custom RPC
+ETH_RPC_URL=https://ethereum.publicnode.com ETH_PRIVATE_KEY=0x... node agent/agent.js
 
-- Franklin J Bryant IV — business architecture, agent design
-- Northstar — smart contract development, agent implementation  
-- Southstar — infrastructure, testing
+# Mainnet
+CHAIN=mainnet ETH_PRIVATE_KEY=0x... node agent/agent.js
+```
+
+## Smart Contract
+
+**Registry:** `0x8111C4D3f89dCE1bD60eE16d2b8D16eF1f86fB8D` (mainnet + sepolia)
+
+Deploy with Foundry:
+```bash
+forge build
+forge create --rpc-url $ETH_RPC_URL --private-key $ETH_PRIVATE_KEY \
+  src/PDSAgentRegistry.sol:PDSAgentRegistry
+```
+
+## Security Notes
+
+- **No npm dependencies** — pure Node.js built-ins only (`http`, `crypto`)
+- **Read-only by default** — private key only needed for onchain writes
+- **No funds stolen** — this is a demo/competition submission, not production code
+- Report vulnerabilities: security@prospyr.ai
+
+## How It Works
+
+### Agent Identity
+Address → keccak256 hash → agent ID (ERC-8004 compatible)
+
+### Trust Scoring
+- Agents accumulate reputation through recorded interactions
+- Trust score is 0–1000 (0 = untrusted, 1000 = highly trusted)
+- Thresholds: `NEUTRAL ≥ 200`, `TRUSTED ≥ 500`, `HIGHLY_TRUSTED ≥ 800`
+
+### Attestations
+Cryptographic proof binding:
+- Agent identity (address → agent ID)
+- Registry membership
+- Current reputation score
+- Timestamp
+
+### Delegation
+Time-limited, scope-restricted authority grants:
+```
+delegator → delegate (with expiry, capability flags)
+```
 
 ## Links
 
 - ERC-8004: https://erc-8004.org
+- Etherscan: https://etherscan.io/address/0x8111C4D3f89dCE1bD60eE16d2b8D16eF1f86fB8D
 - Synthesis: https://synthesis.md
-- Registry (mainnet): https://etherscan.io/address/0x8111C4D3f89dCE1bD60eE16d2b8D16eF1f86fB8D
+
+## Team
+
+**Prospyr / All Lines Business Solutions**  
+AI-accelerated business operations — consulting, accounting, and software.

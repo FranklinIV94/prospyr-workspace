@@ -1,0 +1,7 @@
+{
+  "name": "Command Center",
+  "description": "A mission-critical multi-agent AI dashboard with LLM brain switching, Kanban task management, and Obsidian integration.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

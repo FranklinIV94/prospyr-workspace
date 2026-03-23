@@ -1,0 +1,2 @@
+Obsidian Vault: /home/franklin-bryant/.obsidian/Vaults/Prospyr/
+Tasks Dashboard: Tasks-Dashboard.md

@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id           String         @id @default(cuid())
+  token        String         @unique
+  email        String?
+  firstName    String?
+  lastName     String?
+  phone        String?
+  linkedinUrl  String?
+  headline     String?
+  location     String?
+  
+  // Enrichment status
+  isEnriched   Boolean        @default(false)
+  enrichedAt   DateTime?
+  
+  // Onboarding status
+  currentStep  Int            @default(0)
+  isOnboarded Boolean        @default(false)
+  onboardedAt DateTime?
+  
+  positions      Position[]
+  availabilities Availability[]
+  
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model Position {
+  id          String  @id @default(cuid())
+  clientId    String
+  client      Client  @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  companyName String
+  companyLogo String?
+  title       String
+  startDate   String?
+  endDate     String?
+  isCurrent   Boolean @default(false)
+  sortOrder   Int     @default(0)
+}
+
+model Availability {
+  id          String  @id @default(cuid())
+  clientId    String
+  client      Client  @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  dayOfWeek   Int     // 0-6 (Sunday-Saturday)
+  startTime   String?
+  endTime     String?
+  timezone    String?
+}

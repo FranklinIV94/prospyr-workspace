@@ -1,0 +1,13 @@
+{
+  "name": "albs-command-center",
+  "version": "1.0.0",
+  "description": "ALBS Command Center Desktop Application with Prospyr & Northstar Integration",
+  "main": "command-center-electron.js",
+  "scripts": {
+    "start": "electron .",
+    "install": "npm install electron"
+  },
+  "dependencies": {
+    "electron": "^28.0.0"
+  }
+}

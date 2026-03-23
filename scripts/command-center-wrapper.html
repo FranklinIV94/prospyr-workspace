@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ALBS Command Center - Desktop Access</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; margin-bottom: 20px; }
+        .card { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .btn { background: #007bff; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .btn:hover { background: #0056b3; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .online { background: #d4edda; color: #155724; }
+        .offline { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 ALBS Command Center</h1>
+            <p>Desktop Access for Prospyr & Northstar Integration</p>
+        </div>
+
+        <div class="card">
+            <h3>🎯 Quick Access</h3>
+            <button class="btn" onclick="openUrl('http://100.101.6.44:3001')">Main Command Center</button>
+            <button class="btn" onclick="openUrl('http://100.101.6.44:3001/northstar')">Northstar Interface</button>
+            <button class="btn" onclick="openSsh()">SSH to Northstar</button>
+        </div>
+
+        <div class="card">
+            <h3>🤖 Agent Status</h3>
+            <div id="status" class="status online">Command Center: ONLINE</div>
+            <div id="northstar-status" class="status online">Northstar: ONLINE (100.92.24.43)</div>
+        </div>
+
+        <div class="card">
+            <h3>📋 Recent Work</h3>
+            <ul>
+                <li>✅ Command Center launched successfully (Feb 25, 2026)</li>
+                <li>✅ Multi-agent chat system operational</li>
+                <li>✅ Northstar message queue integrated</li>
+                <li>✅ OmniMind deployment coordination ready</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🛠️ Desktop Integration</h3>
+            <p>To install as desktop application:</p>
+            <ol>
+                <li>Save this file as <code>command-center.html</code></li>
+                <li>Create desktop shortcut pointing to this file</li>
+                <li>Or run the Electron app installer script</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function openUrl(url) {
+            window.open(url, '_blank');
+        }
+
+        function openSsh() {
+            // Try to open terminal with SSH command
+            try {
+                const shell = require('child_process').exec;
+                shell('gnome-terminal -- ssh ubuntu@100.92.24.43');
+            } catch(e) {
+                alert('SSH terminal not available. Use terminal manually: ssh ubuntu@100.92.24.43');
+            }
+        }
+
+        // Check status on load
+        fetch('http://100.101.6.44:3001/api/health')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('status').innerHTML = 'Command Center: ' + (data.status === 'ok' ? '✅ ONLINE' : '❌ OFFLINE');
+                document.getElementById('status').className = data.status === 'ok' ? 'status online' : 'status offline';
+            })
+            .catch(() => {
+                document.getElementById('status').innerHTML = 'Command Center: ❌ UNREACHABLE';
+                document.getElementById('status').className = 'status offline';
+            });
+    </script>
+</body>
+</html>

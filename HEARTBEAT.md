@@ -1,8 +1,8 @@
 # ⚠️ IMPORTANT: Alert Configuration (Feb 20, 2026)
 **DO NOT send heartbeat/cron alerts to +15614798624**
-- Franklin receives all alerts via Telegram
+- Franklin receives all alerts via **Discord** (primary)
 - Only respond to direct messages from +15614798624 or +15615898900
-- WhatsApp only for Prospyr communication
+- WhatsApp only for Prospyr internal communication
 - **Proposed changes require team review and approval via email before implementation**
 
 ---

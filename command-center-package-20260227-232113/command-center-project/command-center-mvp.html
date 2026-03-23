@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Center MVP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 20px;
+            height: 100vh;
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .main {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tasks {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        
+        h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .agent-list, .brain-list {
+            margin-bottom: 30px;
+        }
+        
+        .agent, .brain {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .agent:hover, .brain:hover {
+            background: #f0f0f0;
+        }
+        
+        .agent.active, .brain.active {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .agent-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .agent-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+        
+        .message.user {
+            margin-left: auto;
+        }
+        
+        .message-content {
+            padding: 12px 16px;
+            border-radius: 18px;
+            background: #f0f0f0;
+        }
+        
+        .message.user .message-content {
+            background: #1a1a1a;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.assistant .message-content {
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-header {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        
+        textarea {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: none;
+            min-height: 60px;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
+        }
+        
+        button {
+            padding: 12px 24px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: #333;
+            transform: translateY(-1px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .task {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #1a1a1a;
+        }
+        
+        .task-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .task-desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status.todo {
+            background: #ffedd5;
+            color: #9a3412;
+        }
+        
+        .status.in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status.done {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: #f0f0f0;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #666;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+        
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        
+        .connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+        
+        .connected {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .disconnected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div id="connectionStatus" class="connection-status disconnected">
+        🔴 Backend: Disconnected
+    </div>
+    
+    <div class="container">
+        <!-- Left Sidebar: Agents & Brains -->
+        <div class="sidebar">
+            <h1>Command Center</h1>
+            <p style="font-size: 12px; color: #666; margin-bottom: 20px;">Multi-Agent Collaboration Platform</p>
+            
+            <div class="agent-list">
+                <h2>Agents</h2>
+                <div class="agent active" data-id="prospyr">
+                    <div class="agent-name">⚙️ Prospyr</div>
+                    <div class="agent-desc">Technical Assistant</div>
+                </div>
+                <div class="agent" data-id="northstar">
+                    <div class="agent-name">🎨 Northstar</div>
+                    <div class="agent-desc">UI/UX Specialist</div>
+                </div>
+            </div>
+            
+            <div class="brain-list">
+                <h2>Brain</h2>
+                <div class="brain active" data-id="deepseek">
+                    <div class="agent-name">🤖 DeepSeek</div>
+                    <div class="agent-desc">$0.10/1M tokens</div>
+                </div>
+                <div class="brain" data-id="openai">
+                    <div class="agent-name">🧠 OpenAI GPT-4</div>
+                    <div class="agent-desc">$10/1M tokens</div>
+                </div>
+                <div class="brain" data-id="anthropic">
+                    <div class="agent-name">🛡️ Anthropic Claude</div>
+                    <div class="agent-desc">$15/1M tokens</div>
+                </div>
+                <div class="brain" data-id="gemini">
+                    <div class="agent-name">⚡ Google Gemini</div>
+                    <div class="agent-desc">$7.50/1M tokens</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Chat Area -->
+        <div class="main">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    <div class="message-header">
+                        <span>⚙️ Prospyr</span>
+                        <span>•</span>
+                        <span>🤖 DeepSeek</span>
+                        <span>•</span>
+                        <span id="currentTime">19:03:00</span>
+                    </div>
+                    <div class="message-content">
+                        Hello! I'm <strong>Prospyr</strong>, your Command Center assistant. I'm ready to help coordinate the OmniMind deployment and any other ALBS projects. What would you like to work on?
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <textarea id="messageInput" placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)"></textarea>
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+        
+        <!-- Right Sidebar: Tasks -->
+        <div class="tasks">
+            <h2>Active Operations</h2>
+            <div class="task">
+                <div class="task-title">Deploy OmniMind to N150</div>
+                <div class="task-desc">Complete the N150 hardware deployment using the setup scripts.</div>
+                <div class="task-meta">
+                    <span>⚙️ Prospyr</span>
+                    <span class="status in-progress">In Progress</span>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-title">Test Command Center Backend</div>
+                <div class="task-desc">Verify all API endpoints are working correctly.</div>
+                <div class="task-meta">
+                    <span>⚙️ Prospyr</span>
+                    <span class="status in-progress">In Progress</span>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-title">Connect to Obsidian</div>
+                <div class="task-desc">Ensure automatic note saving is functional.</div>
+                <div class="task-meta">
+                    <span>⚙️ Prospyr</span>
+                    <span class="status todo">To Do</span>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-title">UI Polish for Launch</div>
+                <div class="task-desc">Final styling and responsiveness checks.</div>
+                <div class="task-meta">
+                    <span>🎨 Northstar</span>
+                    <span class="status todo">To Do</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:3001/api';
+        let currentAgent = 'prospyr';
+        let currentBrain = 'deepseek';
+        let isTyping = false;
+        let backendConnected = false;
+        
+        // DOM Elements
+        const connectionStatus = document.getElementById('connectionStatus');
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const currentTime = document.getElementById('currentTime');
+        
+        // Initialize
+        updateTime();
+        setInterval(updateTime, 1000);
+        checkBackendConnection();
+        
+        // Event Listeners
+        document.querySelectorAll('.agent').forEach(agent => {
+            agent.addEventListener('click', () => {
+                document.querySelectorAll('.agent').forEach(a => a.classList.remove('active'));
+                agent.classList.add('active');
+                currentAgent = agent.dataset.id;
+                addSystemMessage(`Switched to ${agent.querySelector('.agent-name').textContent}`);
+            });
+        });
+        
+        document.querySelectorAll('.brain').forEach(brain => {
+            brain.addEventListener('click', () => {
+                document.querySelectorAll('.brain').forEach(b => b.classList.remove('active'));
+                brain.classList.add('active');
+                currentBrain = brain.dataset.id;
+                addSystemMessage(`Switched brain to ${brain.querySelector('.agent-name').textContent}`);
+            });
+        });
+        
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        sendButton.addEventListener('click', sendMessage);
+        
+        // Functions
+        function updateTime() {
+            const now = new Date();
+            currentTime.textContent = now.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        
+        async function checkBackendConnection() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`);
+                if (response.ok) {
+                    backendConnected = true;
+                    connectionStatus.className = 'connection-status connected';
+                    connectionStatus.innerHTML = '🟢 Backend: Connected';
+                    console.log('✅ Backend connected');
+                }
+            } catch (error) {
+                backendConnected = false;
+                connectionStatus.className = 'connection-status disconnected';
+                connectionStatus.innerHTML = '🔴 Backend: Disconnected (Mock Mode)';
+                console.log('⚠️ Backend not connected, using mock mode');
+            }
+        }
+        
+        function addSystemMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message assistant';
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <span>🔧 System</span>
+                    <span>•</span>
+                    <span>${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                </div>
+                <div class="message-content" style="background: #e0f2fe; color: #0369a1;">
+                    ${text}
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function addUserMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <span>👤 You</span>
+                    <span>•</span>
+                    <span>${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                </div>
+                <div class="message-content">
+                    ${escapeHtml(text)}
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function addAssistantMessage(text, agent, brain) {
+            const agentName = agent === 'prospyr' ? '⚙️ Prospyr' : '🎨 Northstar';
+            const brainIcon = brain === 'deepseek' ? '🤖' : 
+                             brain === 'openai' ? '🧠' : 
+                             brain === 'anthropic' ? '🛡️' : '⚡';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message assistant';
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <span>${agentName}</span>
+                    <span>•</span>
+                    <span>${brainIcon} ${brain.charAt(0).toUpperCase() + brain.slice(1)}</span>
+                    <span>•</span>
+                    <span>${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                </div>
+                <div class="message-content">
+                    ${formatMessage(text)}
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function showTypingIndicator() {
+            if (isTyping) return;
+            isTyping = true;
+            
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function hideTypingIndicator() {
+            isTyping = false;
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+        
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if (!text) return;
+            
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if (!text) return;
+            
+            // Add user message
+            addUserMessage(text);
+            messageInput.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            try {
+                let responseText;
+                
+                if (backendConnected) {
+                    // Call backend API
+                    const response = await fetch(`${API_BASE_URL}/chat`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: text,
+                            brainId: currentBrain,
+                            agentId: currentAgent
+                        }),
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    responseText = data.response;
+                } else {
+                    // Mock response
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    const mockResponses = {
+                        prospyr: `I'm **Prospyr**, your technical assistant. You said: "${text}"
+
+I'm currently using the **${currentBrain}** brain.
+
+**Current Status**: Command Center is running in mock mode (backend not connected).
+
+**To connect the backend**:
+1. Ensure the server is running: \`node simple-http-server.js\`
+2. Refresh this page
+3. You should see "Backend: Connected" in the top right
+
+**Tonight's Deployment Tasks**:
+1. OmniMind to N150 hardware
+2. Full Command Center integration
+3. Obsidian auto-save verification
+
+What specific task would you like to focus on?`,
+                        
+                        northstar: `I'm **Northstar**, your UI/UX specialist. You said: "${text}"
+
+I'm currently using the **${currentBrain}** brain.
+
+**UI Status**: This is a minimal HTML interface for quick testing.
+
+**Full React App Features**:
+- Three-pane layout (Agents | Chat | Tasks)
+- Brain switching with cost tracking
+- Mobile-responsive design
+- Material Design 3 components
+- Real-time WebSocket updates
+
+**Next UI Improvements**:
+1. Build the React frontend
+2. Add drag-and-drop task management
+3. Implement dark/light theme toggle
+4. Add keyboard shortcuts
+
+Would you like me to describe any specific UI component?`
+                    };
+                    
+                    responseText = mockResponses[currentAgent] || `Agent ${currentAgent} received: "${text}" using brain: ${currentBrain}`;
+                }
+                
+                // Remove typing indicator and add response
+                hideTypingIndicator();
+                addAssistantMessage(responseText, currentAgent, currentBrain);
+                
+            } catch (error) {
+                console.error('Error sending message:', error);
+                hideTypingIndicator();
+                addAssistantMessage(
+                    `Error: Could not connect to backend. Please ensure the server is running: \`cd /home/ubuntu/.openclaw/workspace/command-center && node simple-http-server.js\``,
+                    currentAgent,
+                    currentBrain
+                );
+            }
+        }
+        
+        function formatMessage(text) {
+            // Simple markdown formatting
+            return escapeHtml(text)
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>');
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Auto-focus input
+        messageInput.focus();
+        
+        // Add welcome message based on connection status
+        setTimeout(() => {
+            if (!backendConnected) {
+                addSystemMessage('Running in mock mode. Start the backend server for full functionality.');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
