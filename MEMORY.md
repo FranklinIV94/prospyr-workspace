@@ -11,6 +11,53 @@
 
 ---
 
+## Corrections Log
+
+*What was wrong → what's right. Learning from failures.*
+
+- **2026-03-24:** Agent claiming "done" without evidence → Now must show file paths/lines written
+- **2026-03-24:** Four Laws not codified → Added ACT/PROVE/WRITE/PROACTIVE to SOUL.md
+- **2026-03-24:** No anti-amnesia scratch pad → Created SCRATCH.md for task state
+- **2026-03-24:** Compaction loses context → Config tuning needed (reserveTokensFloor: 40000)
+
+---
+
+## PEO Business Opportunity (March 24, 2026)
+
+### Key Development
+**Standard Resources** (owned by "Docks") just purchased **Florida Resource Management** (Kelly Anderson's PEO). ALCC has separate service agreements with both entities for claims management.
+
+**Docks' Ask:** Wants to invest in a new claims entity because his PEO technology requires **50,000 covered lives** to be viable. ALCC infrastructure is the path to get there.
+
+**Proposed Structure:**
+- New entity (name TBD) — 70% owned by Mildred and Margie Inc., 30% to Docks/Standard Resources
+- ALCC stays clean — no outside ownership, protected from scrutiny
+- Kelly Anderson out — becomes advisor/employee of Standard Resources post-deal
+
+**Mildred and Margie Inc. — Existing Holdings:**
+- Real estate at 148 Santarem Circle
+- 9% of ALCC (as of Jan 1, 2026)
+
+**⚠️ WATCH:** Foreign networking equipment bans (TP-Link, etc.) could affect Docks' tech costs if he needs enterprise-grade hardware. Monitor.
+
+---
+
+## Hackathon Sprint 2026
+
+**Tracks:** GenLayer × Base (Track 1) | InvoiceFi BNB Chain (Track 2)
+**Sprint doc:** `/workspace/hackathon-sprint-2026.md`
+**Contracts:** `/workspace/hackathon-2026/track1-genlayer/contracts/` + `track2-invoicefi/contracts/`
+
+---
+
+## litellm Supply Chain Attack (March 24, 2026) 🔴
+- PyPI packages 1.82.7/1.82.8 compromised
+- Steals SSH keys, cloud creds, crypto wallets
+- Franklin not affected (no litellm installed)
+- Monitor: `pds-supply-chain-monitor.md`
+
+---
+
 ## ALBS Client Onboarding Portal (Simplifying Businesses)
 
 ### Recent Updates (March 11, 2026)
