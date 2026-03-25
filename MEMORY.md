@@ -25,20 +25,31 @@
 ## PEO Business Opportunity (March 24, 2026)
 
 ### Key Development
-**Standard Resources** (owned by "Docks") just purchased **Florida Resource Management** (Kelly Anderson's PEO). ALCC has separate service agreements with both entities for claims management.
+**Docks Sutherland** (Standard Resources) just purchased **Florida Resource Management** (Kelly Anderson's PEO). ALCC has separate service agreements with both entities for claims management.
 
-**Docks' Ask:** Wants to invest in a new claims entity because his PEO technology requires **50,000 covered lives** to be viable. ALCC infrastructure is the path to get there.
+**Docks' Ask:** Wants ALBS to be the **claims and risk management wing** for his new enterprise (PEO + new entity). His PEO tech requires **50,000 covered lives** to be viable — that's his problem to solve, we provide the claims expertise.
 
-**Proposed Structure:**
-- New entity (name TBD) — 70% owned by Mildred and Margie Inc., 30% to Docks/Standard Resources
+**Negotiated Structure:**
+- New claims entity — 70% owned by Mildred and Margie Inc., 30% to Docks/Standard Resources
 - ALCC stays clean — no outside ownership, protected from scrutiny
-- Kelly Anderson out — becomes advisor/employee of Standard Resources post-deal
+- ALBS role: Claims + risk management for Docks' enterprise (not ALCC)
+- Kelly Anderson out of ALCC orbit — becomes advisor/employee of Standard Resources post-deal
 
 **Mildred and Margie Inc. — Existing Holdings:**
 - Real estate at 148 Santarem Circle
 - 9% of ALCC (as of Jan 1, 2026)
 
 **⚠️ WATCH:** Foreign networking equipment bans (TP-Link, etc.) could affect Docks' tech costs if he needs enterprise-grade hardware. Monitor.
+
+---
+
+## litellm Supply Chain Attack (March 24-25, 2026) 🔴
+- Full technical analysis completed March 25
+- Attack: Malicious .pth file in litellm 1.82.7/1.82.8
+- Steals SSH keys, cloud creds, Kubernetes secrets, crypto wallets
+- Exfil to attacker-controlled `models.litellm.cloud` (not litellm.ai)
+- **Franklin NOT affected** — litellm not installed on any system
+- Docs updated: pds-supply-chain-monitor.md + Obsidian vault note
 
 ---
 
