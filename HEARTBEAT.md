@@ -137,6 +137,14 @@ Email Franklin a weekly summary of:
 - Technology Watch List updates (monitoring targets like Antfarm/OpenClaw)
 - **PRIORITY: Clawdbot VULN-188 patch status**
 
+# Sunbiz Daily Trends (Weekly - Sundays with AI Newsletter)
+Fetch https://www.sunbizdaily.com/trends/ and compare to previous check.
+Alert Franklin via Discord if:
+- Top keyword rankings shift by >5 positions
+- New keyword enters top 10
+- Total filings change by >10%
+- Any notable trend shifts
+
 # Mid-Weekly Business Recap (Automated Wed/Sat)
 Email Franklin a mid-weekly business summary including:
 - Major accomplishments and completed tasks (last 3-4 days)
