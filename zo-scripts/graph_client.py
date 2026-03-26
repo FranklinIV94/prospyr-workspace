@@ -14,10 +14,10 @@ from datetime import datetime, timedelta
 GRAPH_BASE = "https://graph.microsoft.com/v1.0"
 TOKEN_FILE = os.path.expanduser("~/.msgraph-zo-token")
 
-# credentials should be set as env vars in Zo
-CLIENT_ID = os.environ.get("GRAPH_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("GRAPH_CLIENT_SECRET")
-TENANT_ID = os.environ.get("GRAPH_TENANT_ID")
+# App credentials for support@simplifyingbusinesses.com (ALBS)
+CLIENT_ID = os.environ.get("GRAPH_CLIENT_ID", "d5289bd8-eeaf-4789-8720-39bf4dcc91cf")
+CLIENT_SECRET = os.environ.get("GRAPH_CLIENT_SECRET", "ZMQ8Q~HsrlEJ5V9G1y6NL2eY6a2YTnyxQdip6bUB")
+TENANT_ID = os.environ.get("GRAPH_TENANT_ID", "82c42990-313e-4294-983b-f1aa4657c49f")
 
 
 def get_access_token():
