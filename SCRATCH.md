@@ -56,6 +56,14 @@
 2. Continue hackathon work (Track 1 or Track 2)
 3. Process any articles Franklin queued
 
+## Canopy Accelerator Application (March 27, 2026)
+- **Deadline:** April 4, 2026 (1 week)
+- **Program:** April 15 - May 22, SF + online
+- **Ask:** $250K funding + $500K credits
+- **Project:** PDS Trust Infrastructure for AI Agents
+- **Docs:** `/workspace/canopy-application/APPLICATION.md`
+- **Status:** Planning — need actual form questions, demo video
+
 ## Bankr Credits Claim (March 27, 2026)
 - **Task:** Claim Bankr credits for Synthesis hackathon participation
 - **Source:** Synthesis 2026 — Bankr was infrastructure partner offering credits
