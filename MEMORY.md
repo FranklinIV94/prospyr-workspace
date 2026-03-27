@@ -200,3 +200,18 @@ Franklin sends articles/threads he finds on Twitter. My job:
 4. **Blog post ideas** — Flag anything worth documenting for a future blog
 
 **I do NOT go looking for articles.** Franklin feeds them to me.
+
+## Microsoft Graph API (ALBS Support Email)
+**Used for:** support@simplifyingbusinesses.com inbox monitoring and sending
+**Credentials (from TOOLS.md):**
+- CLIENT_ID: `d5289bd8-eeaf-4789-8720-39bf4dcc91cf`
+- TENANT: `82c42990-313e-4294-983b-f1aa4657c49f`
+- SECRET: `ZMQ8Q~HsrlEJ5V9G1y6NL2eY6a2YTnyxQdip6bUB`
+- Token file: `~/.msgraph-token` (refresh when expired)
+- Uses app-only client credentials flow (not user-delegated)
+
+## Zo Integration Scripts (zo-scripts/)
+- `portal_client.py` — Portal API wrapper (leads, chats, services)
+- `graph_client.py` — Graph API client for support@ inbox
+- `support_agent.py` — First-line customer service agent
+- PORTAL_API_KEY: `4c254466258077d5b755273b24f0a46c261ec0e64316f774`
