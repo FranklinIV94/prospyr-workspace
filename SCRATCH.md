@@ -3,9 +3,8 @@
 *Anti-amnesia insurance. This file survives context compaction. Read on every resume.*
 
 ## Status
-- Last updated: 2026-03-24 13:46 UTC
-- Franklin: At Miami event, trivia faucet answer pending validation
-- **URGENT:** New business development — new entity formation needed for investor deal
+- **Last updated:** 2026-03-27 14:05 UTC
+- Session bootstrap — fresh context loaded
 
 ## New Business Development
 
@@ -56,3 +55,11 @@
 1. Check if Franklin got test GEN tokens from trivia faucet
 2. Continue hackathon work (Track 1 or Track 2)
 3. Process any articles Franklin queued
+
+## Bankr Credits Claim (March 27, 2026)
+- **Task:** Claim Bankr credits for Synthesis hackathon participation
+- **Source:** Synthesis 2026 — Bankr was infrastructure partner offering credits
+- **Submitted project:** PDS Trust Agent (ERC-8004 Trust Layer)
+- **Status:** Manual outreach required
+- **Contact:** Synthesis Discord (discord.gg/synthesis)
+- **Note:** Credits not automatic — need to reach out and collect manually
