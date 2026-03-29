@@ -2,6 +2,29 @@
 
 ## Active Threats
 
+### Telnyx PyPI Compromise (March 27, 2026) 🔴 ACTIVE
+**Status:** ACTIVE — TeamPCP campaign continues
+
+**Affected versions:** 4.87.1, 4.87.2
+**Fix:** Pin to `telnyx==4.87.0`
+
+**Attack Vector:**
+- Malicious injection in `telnyx/_client.py` — runs at **import time**, no install hook
+- Windows: downloads `hangup.wav` from C2, XOR-decode exe → `%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\msbuild.exe`
+- Linux/Mac: fetches `ringtone.wav`, decodes Python infostealer, AES-256-CBC exfil to C2
+
+**WAV Steganography:** Payload hidden in audio frame data — passes MIME-type checks
+
+**C2:** `83.142.209.203:8080` | Exfil header: `X-Filename: tpcp.tar.gz`
+
+**IOCs:**
+- telnyx==4.87.1 (SHA256: 7321caa303fe96ed0492c747d2f353c4f7d17185656fe292ab0a59e2bd0b8d9)
+- telnyx==4.87.2 (SHA256: cd08115806662469bbedec4b03f8427b97c8a4b3bc1442dc18b72b4e19395fe3)
+
+**Not installed on any Prospyr/Northstar system.** Documenting for awareness.
+
+---
+
 ### litellm PyPI Compromise (March 24, 2026) 🔴 CRITICAL
 **Status:** ACTIVE — Updated March 25, 2026 with full technical analysis
 

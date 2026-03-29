@@ -26,6 +26,14 @@
   - **AIIO relevance:** Low — specialized research, not business适用
   - Status: Filed under "interesting but not applicable"
 
+### Infrastructure / DevOps
+- **Stripe Projects** — https://stripe.com
+  - New Stripe CLI plugin for provisioning services from terminal
+  - Providers: Vercel, Railway, Supabase, Neon, PlanetScale, Turso, Chroma, Posthog, Clerk, RunloopAI
+  - Key features: provision in your own accounts, sync credentials safely, upgrade to paid tiers without re-entering payment details
+  - **AIIO relevance:** Could streamline ALBS/Zo infrastructure setup — script-based provisioning instead of manual dashboard work
+  - Status: Worth evaluating for future projects
+
 ### Communication Channels
 - **Sendblue CLI** — iMessage API for agents
   - Considered for Zo customer service

@@ -1,4 +1,4 @@
-# Security Feed Summary - March 25, 2026
+# Security Feed Summary - March 29, 2026
 
 ## Stats
 - Total Articles: 
@@ -13,4 +13,4 @@
 
 
 ---
-*Generated: Wed Mar 25 06:00:03 AM EDT 2026*
+*Generated: Sun Mar 29 06:00:03 AM EDT 2026*

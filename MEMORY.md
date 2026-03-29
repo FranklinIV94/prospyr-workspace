@@ -22,24 +22,76 @@
 
 ---
 
-## PEO Business Opportunity (March 24, 2026)
+## PEO Acquisition Proposal — Docks Sutherland / ALCC (FINAL — March 28, 2026)
 
-### Key Development
-**Docks Sutherland** (Standard Resources) just purchased **Florida Resource Management** (Kelly Anderson's PEO). ALCC has separate service agreements with both entities for claims management.
+**Files:** `PEO Acquisition Proposal - Docks Sutherland/Executive-Services-Non-Compete-Proposal-FINAL.pdf.docx` + `Internal-Resolution-1-Proceeds-Allocation.pdf.docx`
 
-**Docks' Ask:** Wants ALBS to be the **claims and risk management wing** for his new enterprise (PEO + new entity). His PEO tech requires **50,000 covered lives** to be viable — that's his problem to solve, we provide the claims expertise.
+**ALCC Ownership:** Renee 91% | Mildred and Margie Inc. 9%
+**Buyer:** Docks Sutherland (Standard Resources / new national PEO entity)
+**Key person:** Renee
 
-**Negotiated Structure:**
-- New claims entity — 70% owned by Mildred and Margie Inc., 30% to Docks/Standard Resources
-- ALCC stays clean — no outside ownership, protected from scrutiny
-- ALBS role: Claims + risk management for Docks' enterprise (not ALCC)
-- Kelly Anderson out of ALCC orbit — becomes advisor/employee of Standard Resources post-deal
+**⚠️ CRITICAL STRUCTURAL CHANGE:** This is NOT a sale of ALCC's PEO client contracts. ALCC retains its 10 PEO client contracts. Proposals B & C are non-compete + employment arrangements — Docks is buying Renee's exclusive focus and removing her from the market as a competitor.
 
-**Mildred and Margie Inc. — Existing Holdings:**
-- Real estate at 148 Santarem Circle
-- 9% of ALCC (as of Jan 1, 2026)
+**Three Tiers:**
 
-**⚠️ WATCH:** Foreign networking equipment bans (TP-Link, etc.) could affect Docks' tech costs if he needs enterprise-grade hardware. Monitor.
+| | Proposal A | Proposal B | Proposal C |
+|---|---|---|---|
+| Structure | Employment only, no non-compete | Full non-compete + employment | Full non-compete + strategic premium |
+| Lump-sum | None | $4,250,000 | $5,750,000 |
+| Salary | $400,000 | $425,000 | $450,000 |
+| Equity | 3% | 5% + 3-yr vest | 8% + participation rights |
+| Renee keeps ALCC? | YES — all ops | NO — full non-compete | NO — full non-compete |
+| Referral fee | 5% additive | 5% credit (revenue-neutral) | 5% credit |
+
+**Non-compete scope (B & C):** PEO claims + recorded statements + drug testing + field investigations = $723K-$833K foreclosed annual revenue
+**Non-compete payment structured as:** Asset Purchase of PEO Claims System (IRC Section 197 intangibles) — target capital gains treatment, not ordinary income
+**Buckets (Internal Resolution 1):** A=Asset sale proceeds (91/9 split), B= Renee's personal employment income (100% Renee), C=Client acquisition credits (100% M&M Inc.)
+
+**ALCC revenue:** $541,200 ARR PEO + $72K-$92K recorded statements + $100K-$200K drug testing/field investigations
+**Switching cost (not transacting):** ~$560,300
+
+**Excluded from all proposals:** Recorded Statements, Field Investigations, Drug Testing — stay under ALCC; only restricted under non-compete in B & C
+
+---
+
+### PEO Acquisition — Round 1 Proposals Submitted (Mar 28, 2026)
+**ALCC PEO Claims Services Division for Sale — presented to Docks via Mildred and Margie Inc.**
+
+- ALCC does two things: (1) PEO claims services, (2) field investigations/drug testing/recorded statements
+- **Target:** PEO claims services only — the other ops go to Mildred and Margie Inc.
+- **PEO Claims financials:** $45,100/month = $541,200/year, 10 PEO clients
+- **EBITDA post-acquisition:** ~$481,200 (88.9% margin) — Renee's comp shifts to buyer side
+- **Switching cost analysis:** $560,300 quantified cost if buyer replaces ALCC instead of acquiring
+
+**Three proposals delivered to Docks (Mar 28, 2026):**
+1. **Proposal A (Baseline):** $3.25M — 6.8x EBITDA, $265K salary, 2% equity
+2. **Proposal B (Preferred Target):** $4.25M — 8.8x EBITDA, $285K salary, 5% equity + vesting
+3. **Proposal C (Strategic Premium):** $5.75M — 11.9x EBITDA, $315K salary, 8% equity + bonus
+
+**Key strategic framing in proposal:**
+- 2 of 10 PEO clients are already Docks' entities (Standard Resources + FL Resource Management)
+- Argues this is a continuity argument, not a discount argument — ALCC delivers the service, not just the contract
+- Renée's post-acq role: national portfolio build-out, NOT new client development
+- 5-year revenue projections used only for valuation basis — NOT performance commitments
+
+**Full proposal:** `Documents/Prospyr/PEO Acquisition Proposal - Docks Sutherland/PEO Claims Services Acquisition - Three Proposal Options.md`
+
+---
+
+### King Audio Platform Project (Mar 28, 2026) 🔊
+**T17 Entertainment product line — LIVEVOCAL + T17 STUDIO WORKSTATION confirmed.**
+
+**Scope confirmed tonight:**
+- **T17 Studio Workstation** — Beelink SER7 (Ryzen 7 8845HS, 32GB, 1TB) + Focusrite Scarlett 2i2. Stays in studio. ~$720.
+- **LiveVocal** — Ventoy-based USB boot. Ubuntu Studio + Reaper + JACK + Demucs. Portable, runs on any x86 laptop at venues. **Target: June 1, 2026.**
+- **KingDAW** — Ardour short-term, JUCE long-term. Post-June.
+- **LiveVocal kit:** Sennheiser EW IEM G4 (~$700) + IE4 buds (~$80) + UCA222 (~$30) + USB drive (~$25). ~$855.
+- **Grand total: ~$1,575**
+
+**Sound analysis:** 3 tracks done — King's vocal chain consistent. Linux VST3 chain: Graillon 2 + TDR Kotelnikov + TDR Slick EQ + Saturn 2 + Valhalla SuperMassive.
+
+**Project brief:** `king-audio-platform/docs/PROJECT-BRIEF.md`
+**Source doc (Franklin's):** `king-audio-platform/docs/T17-Studio-Project-Brief-v3.docx`
 
 ---
 
