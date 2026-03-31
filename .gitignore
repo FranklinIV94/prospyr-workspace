@@ -1,2 +1,14 @@
 .vercel
 TOOLS.md
+
+# Client data - keep local only
+ALBS/Clients/
+Gallagher/
+
+# Credentials and tokens
+.env
+*.key
+*.pem
+credentials.json
+*.token
+*.secret
