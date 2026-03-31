@@ -165,7 +165,7 @@ Claude Code (Anthropic's CLI agent) had its ~512K line TypeScript codebase expos
 
 ## Immediate Next Steps
 
-1. **This week:** Franklin initializes CodeBake with first project
+1. ~~Franklin initializes CodeBake with first project~~ ✅ DONE (March 31, 2026)
 2. **This week:** Create `SCHEDULED.md` documenting all cron jobs
 3. **Next week:** Document `multi-agent-coordination.md` pattern
 4. **This month:** Test WebClaw MCP more thoroughly
