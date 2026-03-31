@@ -33,17 +33,34 @@
 **TaskBlink using AI to reach us = ironic.** They're selling AI outreach to an AI-powered business. Shows the market is maturing.
 
 **Their model vs ours:**
-- TaskBlink: Outbound cold blast → booked calls
-- ALBS: Inbound content marketing → qualified leads
+- TaskBlink: Outbound cold blast → booked calls ($497-$1,997/mo managed service)
+- ALBS: Inbound content marketing → qualified leads (ongoing relationship)
 
-**Their guarantee model** (3 meetings or don't pay) is aggressive — implies either:
-1. They're confident in cold outreach ROI
-2. They're desperate for case studies
+**Their pricing (TaskBlink):**
+| Plan | Price | Contacts |
+|------|-------|----------|
+| Starter | $497/mo | 3,000 SMS |
+| Growth | $997/mo | 7,500 SMS |
+| Scale | $1,997/mo | 15,000 SMS + 15,000 Email |
+
+**Guarantee:** 3 booked appointments first month or don't pay — shows confidence in volume over quality.
+
+**Key differentiators they lead with:**
+- AI-personalized cold outreach at scale
+- Built-in CRM + power dialer
+- GoHighLevel integration (agency CRM)
+- Done-for-you campaign management
+
+**What this means for ALBS:**
+- They're selling *volume* — more contacts, more touches
+- We sell *quality* — targeted, relationship-driven
+- Different buyers, different trust models
+- Cold outreach works for them but erodes trust in the bookkeeping/claims space
 
 **Action items:**
-- Watch for more TaskBlink outreach (check if they're targeting ALBS clients too)
+- Watch for more TaskBlink outreach (check if they're targeting ALBS prospects too)
 - Consider counter-pitch: ALBS's AI does the same for *their* business
-- Monitor their online presence for pricing/positioning intel
+- Apollo.io gives us the same data capability they scrape from Google — we could build a similar outreach system if we wanted
 
 ---
 
