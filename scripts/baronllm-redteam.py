@@ -11,7 +11,7 @@ import os
 import subprocess
 
 # For HF Inference API (when BaronLLM fits or we use endpoints)
-HF_TOKEN = "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"
+HF_TOKEN = "[HUGGINGFACE_TOKEN_PLACEHOLDER]"
 OLLAMA_MODEL = "deepseek-r1:7b"  # Red-team model
 
 def run_red_team_ollama(prompt: str) -> str:
